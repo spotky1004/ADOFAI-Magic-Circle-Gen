@@ -50,5 +50,7 @@ for (var i = 1; i < map.pathData.length; i++) {
 function getDeg(d1, d2) {
   return (d2-d1+540)%360;
 }
+map.settings.backgroundColor = '000000';
+map.settings.trackColor = 'debb7b';
 
 console.log(map.Export());
