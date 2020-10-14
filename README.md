@@ -11,7 +11,7 @@
 4. 브라우저에서 'http://localhost:8080/' 접속
 
 --도움말
-1. Minimum Tile Count는 마법진의 최소 타일 갯수 (Per에 따라 4또는 6의 배수로 조정됨)
+1. Minimum Tile Count는 마법진의 최소 타일 갯수 (Per에 따라 2또는 3또는 4또는 6의 배수로 조정됨)
 2. Per은 마법진 패턴 반복 횟수
 
 ps. 이 프로젝트는 CrackThrough님의 https://github.com/CrackThrough/ADOFAI-WebModule 를 사용했습니다.

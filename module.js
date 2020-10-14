@@ -11,8 +11,8 @@ function findIndex(arr, toFind) {
 function generateCircle(leng=-1, perC=-1) {
   var map = new ADOFAI();
 
-  if (perC == -1 || !(perC == 4 || perC == 6)) {
-    var per = (Math.floor(Math.random()*2)) ? 4 : 6;
+  if (perC == -1 || !(perC == 2 || perC == 3 || perC == 4 || perC == 6)) {
+    var per = ((Math.floor(Math.random()*2)) ? ((Math.floor(Math.random()*2)) ? 2 : 3) : ((Math.floor(Math.random()*2)) ? 4 : 6));
   } else {
     var per = perC;
   }
@@ -25,7 +25,6 @@ function generateCircle(leng=-1, perC=-1) {
   var perArr = [];
   var totDeg = 0;
   for (var i = 0; i < perLeng; i++) {
-    console.log(`${i}: ${perArr.length}`);
     if (i == perLeng-1 && totDeg%(360/per) != 0) {
       perArr.splice(perArr.length-5, perArr.length-1);
       i -= 5;
@@ -67,7 +66,9 @@ function generateCircle(leng=-1, perC=-1) {
     perArr.push(degThis);
   }
   function getDeg(d1, d2) {
-    return (d2-d1+540)%360;
+    var degOff = (d2-d1+540)%360;
+    if (degOff == 0) degOff = 360;
+    return degOff;
   }
 }
 
