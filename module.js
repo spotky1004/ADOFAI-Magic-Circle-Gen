@@ -8,20 +8,28 @@ function findIndex(arr, toFind) {
   }
   return -1;
 }
-function generateCircle(leng=-1, ) {
+function generateCircle(leng=-1, perC=-1) {
   var map = new ADOFAI();
-  map.pathData = [];
 
-  var per = (Math.floor(Math.random()*3)) ? 4 : 6;
+  if (perC == -1 || !(perC == 4 || perC == 6)) {
+    var per = (Math.floor(Math.random()*3)) ? 4 : 6;
+  } else {
+    var per = perC;
+  }
   if (leng == -1) {
     var perLeng = Math.floor(Math.random()*100+100);
   } else {
-    var perLeng = leng;
+    var perLeng = Math.ceil(leng/per);
   }
 
   var perArr = [];
   var totDeg = 0;
-  for (var i = 0; i < perLeng || totDeg%(360/per) != 0; i++) {
+  for (var i = 0; i < perLeng; i++) {
+    console.log(`${i}: ${perArr.length}`);
+    if (i == perLeng-1 && totDeg%(360/per) != 0) {
+      perArr.splice(perArr.length-5, perArr.length-1);
+      i -= 5;
+    }
     pushPerDeg();
   }
 
@@ -45,8 +53,7 @@ function generateCircle(leng=-1, ) {
   map.settings.backgroundColor = '000000';
   map.settings.trackColor = 'debb7b';
 
-  document.querySelector('#genButton').innerHTML = map.Export();
-  console.log(map.Export());
+  document.querySelector('#genOutput').innerHTML = map.Export();
 
   function pushPerDeg() {
     var degThis = ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[Math.floor((ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length-5)*Math.random())];

@@ -2,14 +2,30 @@
 <html dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="index.css">
     <script src="module.js" type="module" defer></script>
     <script src="index.js" defer></script>
     <title>ADOFAI Magic Circle Gen</title>
   </head>
   <body>
-    <div id="genButton" style="line-break: auto; cursor: pointer;">
-      Generate!
+    <div id="topNav" style="width: 95vw; position: fixed; background-color: #fff;">
+      <div>
+        <span>Minimum Tile Count: </span>
+        <span id="tileCount" contenteditable="true" spellcheck="false" style="padding: 0 1vw; background-color: #eee;">
+          -1
+        </span>
+      </div>
+      <div>
+        <span>Per (4 or 6): </span>
+        <span id="perCount" contenteditable="true" spellcheck="false" style="padding: 0 1vw; background-color: #eee;">
+          4
+        </span>
+      </div>
+      <div id="genButton" style="width: 20vw; cursor: pointer; border: 0.4vh solid #888; background-color: #eee; user-select: none;">
+        Click here to Generate!
+      </div>
+    </div>
+    <div id="genOutput" contenteditable="true" spellcheck="false" style="padding-top: 9vh">
+      Output here!
     </div>
   </body>
 </html>
