@@ -1,4 +1,4 @@
-import ADOFAI from "./ADOFAI-WebModule/ADOFAI-WebModule.js";
+import ADOFAI from "./ADOFAI-WebModule/src/data_types/_init.js";
 
 function findIndex(arr, toFind) {
   for (var i = 0; i < arr.length; i++) {
@@ -10,8 +10,8 @@ function findIndex(arr, toFind) {
 }
 var map = new ADOFAI();
 
-var per = 4;
-var perLeng = Math.floor(Math.random()*50+50);
+var per = 6;
+var perLeng = Math.floor(Math.random()*100+100);
 
 var perArr = [];
 var totDeg = 0;
@@ -21,7 +21,7 @@ for (var i = 0; i < perLeng || totDeg%(360/per) != 0; i++) {
 function pushPerDeg() {
   var degThis = ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[Math.floor((ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length-5)*Math.random())];
   for (var i = 0; i < per; i++) {
-    if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1) {
+    if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || (degThis-perArr[perArr.length-1]+540)%360 > 240 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1) {
       pushPerDeg();
       return;
     }
@@ -37,7 +37,7 @@ for (var i = 0; i < per; i++) {
 
 var prevDeg = 180;
 var prevOffest = 180;
-var prevMult = 1;
+//var prevMult = 1;
 for (var i = 1; i < map.pathData.length; i++) {
   map.actions.push(new ADOFAI.Action(i, "SetSpeed"));
   map.actions[i-1].eventValue.isSpeedTypeBPM = false;
@@ -45,7 +45,7 @@ for (var i = 1; i < map.pathData.length; i++) {
   map.actions[i-1].eventValue.BPM_Multiplier = multThis;
   prevOffest = getDeg(prevDeg, map.pathData[i].absoluteAngle);
   prevDeg = map.pathData[i].absoluteAngle;
-  prevMult = multThis;
+  //prevMult = multThis;
 }
 function getDeg(d1, d2) {
   return (d2-d1+540)%360;
