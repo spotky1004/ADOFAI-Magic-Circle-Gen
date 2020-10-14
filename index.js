@@ -21,7 +21,7 @@ for (var i = 0; i < perLeng || totDeg%(360/per) != 0; i++) {
 function pushPerDeg() {
   var degThis = ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[Math.floor((ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length-5)*Math.random())];
   for (var i = 0; i < per; i++) {
-    if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || (degThis-perArr[perArr.length-1]+540)%360 > 240 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1) {
+    if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || (degThis-perArr[perArr.length-1]+540)%360 > 360 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1) {
       pushPerDeg();
       return;
     }
