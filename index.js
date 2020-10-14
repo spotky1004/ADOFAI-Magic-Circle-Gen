@@ -10,7 +10,7 @@ function findIndex(arr, toFind) {
 }
 var map = new ADOFAI();
 
-var per = 6;
+var per = (Math.floor(Math.random()*3)) ? 4 : 6;
 var perLeng = Math.floor(Math.random()*100+100);
 
 var perArr = [];
