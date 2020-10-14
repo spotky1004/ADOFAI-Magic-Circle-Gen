@@ -1,5 +1,5 @@
 --설치
-1. https://github.com/spotky1004/ADOFAI-Magic-Circle-Gen에 접속.
+1. https://github.com/spotky1004/ADOFAI-Magic-Circle-Gen 에 접속.
 2. Code버튼(초록색 다운버튼) 클릭
 3. Download Zip클릭
 4. 압축 해제
@@ -14,4 +14,4 @@
 1. Minimum Tile Count는 마법진의 최소 타일 갯수 (Per에 따라 4또는 6의 배수로 조정됨)
 2. Per은 마법진 패턴 반복 횟수
 
-ps. 이 프로젝트는 https://github.com/CrackThrough/ADOFAI-WebModule를 사용했습니다.
+ps. 이 프로젝트는 CrackThrough님의 https://github.com/CrackThrough/ADOFAI-WebModule 를 사용했습니다.
