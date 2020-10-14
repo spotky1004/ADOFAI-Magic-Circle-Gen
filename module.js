@@ -12,7 +12,7 @@ function generateCircle(leng=-1, perC=-1) {
   var map = new ADOFAI();
 
   if (perC == -1 || !(perC == 4 || perC == 6)) {
-    var per = (Math.floor(Math.random()*3)) ? 4 : 6;
+    var per = (Math.floor(Math.random()*2)) ? 4 : 6;
   } else {
     var per = perC;
   }
