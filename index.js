@@ -1,4 +1,4 @@
-import ADOFAI from "./ADOFAI-WebModule/src/data_types/_init.js";
+import ADOFAI from "./ADOFAI-WebModule/ADOFAI-WebModule.js";
 
 function findIndex(arr, toFind) {
   for (var i = 0; i < arr.length; i++) {
