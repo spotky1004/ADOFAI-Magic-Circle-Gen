@@ -8,9 +8,16 @@ function findIndex(arr, toFind) {
   }
   return -1;
 }
-function generateCircle(leng=-1, perC=-1) {
+function generateCircle(leng=-1, perC=-1, twirl=0) {
   var map = new ADOFAI();
 
+  if (!(twirl == 0 || twirl == 1)) {
+    twirl = Math.floor(Math.random()*2);
+  }
+  if (twirl) {
+    map.actions.push(new ADOFAI.Action(6, "Twirl"));
+  }
+  console.log(twirl);
   if (perC == -1 || !(perC == 2 || perC == 3 || perC == 4 || perC == 6)) {
     var per = ((Math.floor(Math.random()*2)) ? ((Math.floor(Math.random()*2)) ? 2 : 3) : ((Math.floor(Math.random()*2)) ? 4 : 6));
   } else {
@@ -41,7 +48,7 @@ function generateCircle(leng=-1, perC=-1) {
   var prevDeg = 180;
   var prevOffest = 180;
   for (var i = 1; i < map.pathData.length; i++) {
-    map.actions.push(new ADOFAI.Action(i, "SetSpeed"));
+    map.actions.push(new ADOFAI.Action((twirl ? i+1 : i), "SetSpeed"));
     map.actions[i-1].eventValue.isSpeedTypeBPM = false;
     var multThis = (getDeg(prevDeg, map.pathData[i].absoluteAngle)/prevOffest);
     map.actions[i-1].eventValue.BPM_Multiplier = multThis;
@@ -67,6 +74,7 @@ function generateCircle(leng=-1, perC=-1) {
   }
   function getDeg(d1, d2) {
     var degOff = (d2-d1+540)%360;
+    if (twirl) degOff = 360-degOff;
     if (degOff == 0) degOff = 360;
     return degOff;
   }
