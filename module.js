@@ -8,8 +8,11 @@ function findIndex(arr, toFind) {
   }
   return -1;
 }
-function generateCircle(leng=-1, perC=-1, twirl=0) {
+function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0) {
   var map = new ADOFAI();
+  map.pathData = [];
+  map.pathData.push(new ADOFAI.PathData('R'));
+  map.pathData.push(new ADOFAI.PathData('R'));
 
   if (!(twirl == 0 || twirl == 1)) {
     twirl = Math.floor(Math.random()*2);
@@ -17,7 +20,9 @@ function generateCircle(leng=-1, perC=-1, twirl=0) {
   if (twirl) {
     map.actions.push(new ADOFAI.Action(6, "Twirl"));
   }
-  console.log(twirl);
+  if (!(midspin == 0 || midspin == 1)) {
+    midspin = Math.floor(Math.random()*2);
+  }
   if (perC == -1 || !(perC == 2 || perC == 3 || perC == 4 || perC == 6)) {
     var per = ((Math.floor(Math.random()*2)) ? ((Math.floor(Math.random()*2)) ? 2 : 3) : ((Math.floor(Math.random()*2)) ? 4 : 6));
   } else {
@@ -42,18 +47,35 @@ function generateCircle(leng=-1, perC=-1, twirl=0) {
   for (var i = 0; i < per; i++) {
     for (var j = 0; j < perArr.length; j++) {
       map.pathData.push(new ADOFAI.PathData(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (perArr[j]+360/per*i)%360)]));
+      if (
+        midspin &&
+        findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (perArr[j]+360/per*i-15)%360) != -1 &&
+        getDeg(perArr[j], perArr[j+1]) > 15
+      ) {
+        map.pathData.push(new ADOFAI.PathData(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (perArr[j]+360/per*i-15)%360)]));
+        map.pathData.push(new ADOFAI.PathData('!'));
+      }
     }
   }
 
+  console.log(map);
   var prevDeg = 180;
   var prevOffest = 180;
   for (var i = 1; i < map.pathData.length; i++) {
     map.actions.push(new ADOFAI.Action((twirl ? i+1 : i), "SetSpeed"));
     map.actions[i-1].eventValue.isSpeedTypeBPM = false;
-    var multThis = (getDeg(prevDeg, map.pathData[i].absoluteAngle)/prevOffest);
-    map.actions[i-1].eventValue.BPM_Multiplier = multThis;
-    prevOffest = getDeg(prevDeg, map.pathData[i].absoluteAngle);
-    prevDeg = map.pathData[i].absoluteAngle;
+    if (!(map.pathData[i].code == '!' || map.pathData[i-1].code == '!')) {
+      var multThis = (getDeg(prevDeg, map.pathData[i].absoluteAngle)/prevOffest);
+      map.actions[i-1].eventValue.BPM_Multiplier = multThis;
+      prevOffest = getDeg(prevDeg, map.pathData[i].absoluteAngle);
+      prevDeg = map.pathData[i].absoluteAngle;
+    } else {
+      if (map.pathData[i].code == '!') {
+        map.actions[i-1].eventValue.BPM_Multiplier = 0.1;
+      } else {
+        map.actions[i-1].eventValue.BPM_Multiplier = 10;
+      }
+    }
   }
 
   map.settings.backgroundColor = '000000';
