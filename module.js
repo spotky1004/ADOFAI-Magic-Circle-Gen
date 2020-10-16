@@ -18,7 +18,7 @@ function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0) {
     twirl = Math.floor(Math.random()*2);
   }
   if (twirl) {
-    map.actions.push(new ADOFAI.Action(6, "Twirl"));
+    map.actions.push(new ADOFAI.Action(1, "Twirl"));
   }
   if (!(midspin == 0 || midspin == 1)) {
     midspin = Math.floor(Math.random()*2);
