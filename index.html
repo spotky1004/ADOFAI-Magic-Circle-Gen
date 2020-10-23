@@ -6,8 +6,8 @@
     <script src="index.js" defer></script>
     <title>ADOFAI Magic Circle Gen</title>
   </head>
-  <body>
-    <div id="topNav" style="width: 95vw; position: fixed; background-color: #fff;">
+  <body style="overflow:hidden;">
+    <div id="topNav" style="width: 95vw; position: fixed; background-color: #fff; z-index: 5;">
       <div>
         <span>Minimum Tile Count: </span>
         <span id="tileCount" contenteditable="true" spellcheck="false" style="padding: 0 1vw; background-color: #eee;">
@@ -26,6 +26,12 @@
           0
         </span>
       </div>
+      <!--<div>
+        <span>Max Deg (360 ~ 0): </span>
+        <span id="maxDeg" contenteditable="true" spellcheck="false" style="padding: 0 1vw; background-color: #eee;">
+          360
+        </span>
+      </div>-->
       <div>
         <span><span style="color:red;">Bug Warning!</span> Midspin (0 or 1 // 0 to disable , 1 to enable): </span>
         <span id="midspinFlag" contenteditable="true" spellcheck="false" style="padding: 0 1vw; background-color: #eee;">
@@ -35,9 +41,12 @@
       <div id="genButton" style="width: 20vw; cursor: pointer; border: 0.4vh solid #888; background-color: #eee; user-select: none;">
         Click here to Generate!
       </div>
+      <div id="genOutput" contenteditable="true" spellcheck="false" style="height: 5vh; overflow: hidden;">
+        Output here!
+      </div>
     </div>
-    <div id="genOutput" contenteditable="true" spellcheck="false" style="padding-top: 12vh">
-      Output here!
+    <div id="preview" style="position: absolute; z-index: 0;">
+      <canvas id="canvas" width="300" height="300"></canvas>
     </div>
   </body>
 </html>
