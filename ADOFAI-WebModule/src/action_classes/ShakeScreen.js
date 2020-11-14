@@ -1,9 +1,9 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 
 /**
  * Class for storing values of ShakeScreen action.
  */
-class MapEvent_ShakeScreen extends ActionEventType {
+class MapEvent_ShakeScreen extends ActionValue {
   /**
    * Create a ShakeScreen event using these parameters.
    * @param {Number} duration Duration of this action.
@@ -31,12 +31,12 @@ class MapEvent_ShakeScreen extends ActionEventType {
   /**
    * Strength of the shake.
    */
-  strength = 1;
+  strength = 100;
 
   /**
    * Intensity of the shake.
    */
-  intensity = 1;
+  intensity = 100;
 
   /**
    * Whether to fade out the shake effect (<-- true) or just cut it plain (<-- false).
@@ -60,9 +60,9 @@ class MapEvent_ShakeScreen extends ActionEventType {
     return `, "duration": ${JSON.stringify(
       params[0] == null ? this.duration : params[0]
     )}, "strength": ${JSON.stringify(
-      (params[1] == null ? this.strength : params[1]) * 100
+      params[1] == null ? this.strength : params[1]
     )}, "intensity": ${JSON.stringify(
-      (params[2] == null ? this.intensity : params[2]) * 100
+      params[2] == null ? this.intensity : params[2]
     )}, "fadeOut": ${JSON.stringify(
       (params[3] == null ? this.fadeOut : params[3]) ? "Enabled" : "Disabled"
     )}, "angleOffset": ${JSON.stringify(
@@ -70,6 +70,18 @@ class MapEvent_ShakeScreen extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[5] == null ? this.eventTag : params[5]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

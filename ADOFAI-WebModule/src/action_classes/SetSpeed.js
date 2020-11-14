@@ -1,38 +1,41 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
+import SPEEDTYPE from "../data_types/speedtype.js";
 
 /**
  * Class for storing values of SetSpeed action.
+ *
+ * DO NOT MANUALLY USE STRING IN `speedType` PROPERTY.
  */
-class MapEvent_SetSpeed extends ActionEventType {
+class MapEvent_SetSpeed extends ActionValue {
   /**
    * Create a SetSpeed event using these parameters.
-   * @param {Boolean | String} isSpeedTypeBPM Whether to use speed type as BPM or BPM Multiplication.
-   * @param {Number} BPM BPM to change as.
-   * @param {Number} BPM_Multiplier BPM to multiply with previous BPM (Not BPM in this class).
+   * @param {String} speedType Please use enum instead of manually typing the string. Enum is saved at `speedtype.js`.
+   * @param {Number} beatsPerMinute BPM to change as.
+   * @param {Number} bpmMultiplier BPM to multiply with previous BPM (Not BPM in this class).
    */
-  constructor(isSpeedTypeBPM, BPM, BPM_Multiplier) {
+  constructor(speedType, beatsPerMinute, bpmMultiplier) {
     super();
-    this.isSpeedTypeBPM =
-      isSpeedTypeBPM == null ? this.isSpeedTypeBPM : (typeof isSpeedTypeBPM == 'string' ? (isSpeedTypeBPM == 'Bpm') : isSpeedTypeBPM);
-    this.BPM = BPM == null ? this.BPM : BPM;
-    this.BPM_Multiplier =
-      BPM_Multiplier == null ? this.BPM_Multiplier : BPM_Multiplier;
+    this.speedType = speedType == null ? this.speedType : speedType;
+    this.beatsPerMinute =
+      beatsPerMinute == null ? this.beatsPerMinute : beatsPerMinute;
+    this.bpmMultiplier =
+      bpmMultiplier == null ? this.bpmMultiplier : bpmMultiplier;
   }
 
   /**
-   * Whether to use speed type as BPM or BPM Multiplication. (Always boolean)
+   * Please use enum instead of manually typing the string. Enum is saved at `speedtype.js`.
    */
-  isSpeedTypeBPM = true;
+  speedType = SPEEDTYPE.BPM;
 
   /**
    * BPM to change as.
    */
-  BPM = 120;
+  beatsPerMinute = 120;
 
   /**
    * BPM to multiply with previous BPM (Not this BPM).
    */
-  BPM_Multiplier = 1;
+  bpmMultiplier = 1;
 
   /**
    * Returns a json part of this event.
@@ -47,6 +50,18 @@ class MapEvent_SetSpeed extends ActionEventType {
     )}, "bpmMultiplier": ${JSON.stringify(
       params[2] == null ? this.BPM_Multiplier : params[2]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

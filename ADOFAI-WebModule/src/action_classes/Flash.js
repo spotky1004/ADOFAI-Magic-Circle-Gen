@@ -1,13 +1,13 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import Color from "../data_types/color.js";
 import PLANE from "../data_types/plane.js";
 
 /**
  * Class for storing values of Flash action.
  *
- * DO NOT MANUALLY USE STRING IN `plane` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `plane` PROPERTY.
  */
-class MapEvent_Flash extends ActionEventType {
+class MapEvent_Flash extends ActionValue {
   /**
    * Create a Flash event using these parameters.
    * @param {Number} duration Duration of flash effect.
@@ -58,7 +58,7 @@ class MapEvent_Flash extends ActionEventType {
   /**
    * Opacity of the flash when the effect starts.
    */
-  startOpacity = 1;
+  startOpacity = 100;
 
   /**
    * Color of the flash when the effect ends.
@@ -91,16 +91,28 @@ class MapEvent_Flash extends ActionEventType {
     )}, "startColor": ${JSON.stringify(
       (params[2] == null ? this.startColor : params[2]).toString()
     )}, "startOpacity": ${JSON.stringify(
-      (params[3] == null ? this.startOpacity : params[3]) * 100
+      params[3] == null ? this.startOpacity : params[3]
     )}, "endColor": ${JSON.stringify(
       (params[4] == null ? this.endColor : params[4]).toString()
     )}, "endOpacity": ${JSON.stringify(
-      (params[5] == null ? this.endOpacity : params[5]) * 100
+      params[5] == null ? this.endOpacity : params[5]
     )}, "angleOffset": ${JSON.stringify(
       params[6] == null ? this.angleOffset : params[6]
     )}, "eventTag": ${JSON.stringify(
       params[7] == null ? this.eventTag : params[7]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

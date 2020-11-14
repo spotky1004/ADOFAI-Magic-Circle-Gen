@@ -1,13 +1,13 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import Color from "../data_types/color.js";
 import BG_DISPLAY_MODE from "../data_types/bgdisplaymode.js";
 
 /**
  * Class for storing values of CustomBackground action.
  *
- * DO NOT MANUALLY USE STRING IN `bgDisplayMode` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `bgDisplayMode` PROPERTY.
  */
-class MapEvent_CustomBackground extends ActionEventType {
+class MapEvent_CustomBackground extends ActionValue {
   /**
    * Create a CustomBackground event using these parameters.
    * @param {Color} color Color of the background (without image). The Color class is in `color.js`.
@@ -85,7 +85,7 @@ class MapEvent_CustomBackground extends ActionEventType {
   /**
    * Size of an image when unscaled.
    */
-  unscaledSize = 1;
+  unscaledSize = 100;
 
   /**
    * Angle offset of the event.
@@ -118,12 +118,24 @@ class MapEvent_CustomBackground extends ActionEventType {
     )}, "loopBG": ${JSON.stringify(
       (params[5] == null ? this.loopBG : params[5]) ? "Enabled" : "Disabled"
     )}, "unscaledSize": ${JSON.stringify(
-      (params[6] == null ? this.unscaledSize : params[6]) * 100
+      params[6] == null ? this.unscaledSize : params[6]
     )}, "angleOffset": ${JSON.stringify(
       params[7] == null ? this.angleOffset : params[7]
     )}, "eventTag": ${JSON.stringify(
       params[8] == null ? this.eventTag : params[8]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

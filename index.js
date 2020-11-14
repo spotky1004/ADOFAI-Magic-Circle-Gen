@@ -8,6 +8,19 @@ document.querySelector('#genButton').onclick = new Function(`
   );`
 );
 
+var pNode = document.getElementById('selectDegs');
+var disDegs = new Array(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length).fill(0);
+for (var i = 0; i < ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length; i++) {
+  var cNode = document.createElement('span');
+  cNode.classList.add('degSeg');
+  cNode.innerHTML = ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[i];
+  if (cNode.innerHTML == '0' || Number(cNode.innerHTML)%15 != 0) {
+    cNode.style.display = 'none';
+  }
+  cNode.onclick = new Function(`disDegs[${i}] ^= 1;document.querySelectorAll('#selectDegs > span')[${i}].classList.toggle('d')`);
+  pNode.append(cNode);
+}
+
 setInterval( function () {
   canvas.width = innerWidth;
   canvas.height = innerHeight;

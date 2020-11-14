@@ -1,10 +1,10 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import Color from "../data_types/color.js";
 
 /**
  * Class for storing values of Bloom action.
  */
-class MapEvent_Bloom extends ActionEventType {
+class MapEvent_Bloom extends ActionValue {
   /**
    * Create a Bloom event using these parameters.
    * @param {Boolean} enabled Enabled / Disabled status of the event.
@@ -32,12 +32,12 @@ class MapEvent_Bloom extends ActionEventType {
   /**
    * Area (threshold) of the bloom effect.
    */
-  threshold = 0.5;
+  threshold = 50;
 
   /**
    * Intensity of the event.
    */
-  intensity = 1;
+  intensity = 100;
 
   /**
    * Color of the bloom. The Color class is in `color.js`
@@ -61,9 +61,9 @@ class MapEvent_Bloom extends ActionEventType {
     return `, "enabled": ${JSON.stringify(
       (params[0] == null ? this.enabled : params[0]) ? "Enabled" : "Disabled"
     )}, "threshold": ${JSON.stringify(
-      (params[1] == null ? this.threshold : params[1]) * 100
+      params[1] == null ? this.threshold : params[1]
     )}, "intensity": ${JSON.stringify(
-      (params[2] == null ? this.intensity : params[2]) * 100
+      params[2] == null ? this.intensity : params[2]
     )}, "color": ${JSON.stringify(
       params[3] == null ? this.color.toString() : params[3].toString()
     )}, "angleOffset": ${JSON.stringify(
@@ -71,6 +71,18 @@ class MapEvent_Bloom extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[5] == null ? this.eventTag : params[5]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

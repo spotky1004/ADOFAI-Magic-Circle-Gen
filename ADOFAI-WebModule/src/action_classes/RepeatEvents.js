@@ -1,9 +1,9 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 
 /**
  * Class for storing values of RepeatEvents action.
  */
-class MapEvent_RepeatEvents extends ActionEventType {
+class MapEvent_RepeatEvents extends ActionValue {
   /**
    * Create a RepeatEvents event using these parameters.
    * @param {Number} repetitions Repetitions (Repeating count) of the events.
@@ -41,6 +41,18 @@ class MapEvent_RepeatEvents extends ActionEventType {
     )}, "interval": ${JSON.stringify(
       params[1] == null ? this.interval : params[1]
     )}, "tag": ${JSON.stringify(params[2] == null ? this.tag : params[2])}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

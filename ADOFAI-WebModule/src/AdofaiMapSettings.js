@@ -7,6 +7,7 @@ import APPEAR_ANIM from "./data_types/trackappearanim.js";
 import DISAPPEAR_ANIM from "./data_types/trackdisappearanim.js";
 import BG_DISPLAY_MODE from "./data_types/bgdisplaymode.js";
 import RELATIVE_TO from "./data_types/relativeto.js";
+import SPECIAL_ARTIST_TYPE from "./data_types/special_artist_type.js";
 import EASE from "./data_types/ease.js";
 
 var obj = {
@@ -23,6 +24,20 @@ var obj = {
    * Name of the artist made the music.
    */
   artist: "Composer",
+
+  /**
+   * Special situtations you don't need to upload a permission from the artist.
+   *
+   * Enum is saved at `special_artist_type.js`.
+   */
+  specialArtistType: SPECIAL_ARTIST_TYPE.NONE,
+
+  /**
+   * Location of an image file relative to map file's directory.
+   *
+   * Image file containing whether you are allowed to this music or not.
+   */
+  artistPermission: "",
 
   /**
    * Name of the song.
@@ -90,13 +105,6 @@ var obj = {
   levelTags: "",
 
   /**
-   * Location of an image file relative to map file's directory.
-   *
-   * Image file containing whether you are allowed to this music or not.
-   */
-  artistPermission: "",
-
-  /**
    * Link to composer's soundcloud profile or youtube channel or anything.
    */
   artistLinks: "",
@@ -127,9 +135,9 @@ var obj = {
   /**
    * Volume of the music.
    *
-   * (Minimum 0 ~ Maximum 1) Allows decimals.
+   * (Minimum 0 ~ Maximum 100) Allows decimals.
    */
-  volume: 1,
+  volume: 100,
 
   /**
    * Offset of the music.
@@ -143,7 +151,7 @@ var obj = {
    *
    * (Minimum > 0 ~ Maximum 2147483647) Allows decimals.
    */
-  pitch: 1,
+  pitch: 100,
 
   /**
    * Hitsound of the tile.
@@ -155,9 +163,9 @@ var obj = {
   /**
    * Volume of hitsounds.
    *
-   * (Minimum 0 ~ Maximum 1) Allows decimals.
+   * (Minimum 0 ~ Maximum 100) Allows decimals.
    */
-  hitsoundVolume: 1,
+  hitsoundVolume: 100,
 
   /**
    * Countdown tick right before playing the level.
@@ -289,9 +297,9 @@ var obj = {
   /**
    * Unscaled size of the image.
    *
-   * (Minimum 0 ~ Maximum 1) Allows decimals.
+   * (Minimum 0 ~ Maximum 100) Allows decimals.
    */
-  unscaledSize: 1,
+  unscaledSize: 100,
 
   /**
    * Type of camera's position relativity.
@@ -317,7 +325,7 @@ var obj = {
    *
    * Allows decimals.
    */
-  zoom: 1.6,
+  zoom: 160,
 
   /**
    * Location of an video file relative to map file's directory.

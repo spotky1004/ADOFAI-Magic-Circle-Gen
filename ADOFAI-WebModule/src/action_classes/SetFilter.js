@@ -1,12 +1,12 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import FILTER from "../data_types/filter.js";
 
 /**
  * Class for storing values of SetFilter action.
  *
- * DO NOT MANUALLY USE STRING IN `filter` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `filter` PROPERTY.
  */
-class MapEvent_SetFilter extends ActionEventType {
+class MapEvent_SetFilter extends ActionValue {
   /**
    * Create a SetFilter event using these parameters.
    * @param {String} filter Type of filter. Please use enum instead of manually typing the string. Enum is saved at `filter.js`.
@@ -47,7 +47,7 @@ class MapEvent_SetFilter extends ActionEventType {
   /**
    * Intensity of the filter.
    */
-  intensity = 1;
+  intensity = 100;
 
   /**
    * Disable other filters when this event occurs.
@@ -73,7 +73,7 @@ class MapEvent_SetFilter extends ActionEventType {
     )}, "enabled": ${JSON.stringify(
       (params[1] == null ? this.enabled : params[1]) ? "Enabled" : "Disabled"
     )}, "intensity": ${JSON.stringify(
-      (params[2] == null ? this.intensity : params[2]) * 100
+      params[2] == null ? this.intensity : params[2]
     )}, "disableOthers": ${JSON.stringify(
       (params[3] == null ? this.disableOthers : params[3])
         ? "Enabled"
@@ -83,6 +83,18 @@ class MapEvent_SetFilter extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[5] == null ? this.eventTag : params[5]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

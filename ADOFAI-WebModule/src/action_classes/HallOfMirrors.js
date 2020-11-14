@@ -1,8 +1,8 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 /**
  * Class for storing values of HallOfMirrors action.
  */
-class MapEvent_HallOfMirrors extends ActionEventType {
+class MapEvent_HallOfMirrors extends ActionValue {
   /**
    * Create a HallOfMirrors event using these parameters.
    * @param {Boolean} enabled Enabled / Disabled status of the event.
@@ -42,6 +42,18 @@ class MapEvent_HallOfMirrors extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[2] == null ? this.eventTag : params[2]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

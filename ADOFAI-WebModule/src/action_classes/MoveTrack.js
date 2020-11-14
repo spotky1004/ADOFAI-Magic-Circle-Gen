@@ -1,13 +1,13 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import TILE_RANGE from "../data_types/tilerange.js";
 import EASE from "../data_types/ease.js";
 
 /**
  * Class for storing values of MoveTrack action.
  *
- * DO NOT MANUALLY USE STRING IN `startTile`, `endTile`, `ease` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `startTile`, `endTile`, `ease` PROPERTY.
  */
-class MapEvent_MoveTrack extends ActionEventType {
+class MapEvent_MoveTrack extends ActionValue {
   /**
    * Create a MoveTrack event using these parameters.
    * @param {[Number, String]} startTile Unlike offset-related parameters, this one uses 1st item for offsetting tile and 2nd item for tile range.
@@ -80,12 +80,12 @@ class MapEvent_MoveTrack extends ActionEventType {
   /**
    * Scale of the track.
    */
-  scale = 1;
+  scale = 100;
 
   /**
    * Opacity of the track.
    */
-  opacity = 1;
+  opacity = 100;
 
   /**
    * Angle offset of the event.
@@ -123,9 +123,9 @@ class MapEvent_MoveTrack extends ActionEventType {
     )}], "rotationOffset": ${JSON.stringify(
       params[4] == null ? this.rotationOffset : params[4]
     )}, "scale": ${JSON.stringify(
-      (params[5] == null ? this.scale : params[5]) * 100
+      params[5] == null ? this.scale : params[5]
     )}, "opacity": ${JSON.stringify(
-      (params[6] == null ? this.opacity : params[6]) * 100
+      params[6] == null ? this.opacity : params[6]
     )}, "angleOffset": ${JSON.stringify(
       params[7] == null ? this.angleOffset : params[7]
     )}, "ease": ${JSON.stringify(
@@ -133,6 +133,18 @@ class MapEvent_MoveTrack extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[9] == null ? this.eventTag : params[9]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

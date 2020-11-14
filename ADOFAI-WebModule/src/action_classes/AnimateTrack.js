@@ -1,13 +1,13 @@
-import ActionEventType from "../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import APPEAR_ANIM from "../data_types/trackappearanim.js";
 import DISAPPEAR_ANIM from "../data_types/trackdisappearanim.js";
 
 /**
  * Class for storing values of AnimateTrack action.
  *
- * DO NOT MANUALLY USE STRING IN `trackAnimation`, `trackDisappearAnimation` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `trackAnimation`, `trackDisappearAnimation` PROPERTY.
  */
-class MapEvent_AnimateTrack extends ActionEventType {
+class MapEvent_AnimateTrack extends ActionValue {
   /**
    * Create a AnimateTrack event using these parameters.
    * @param {String} trackAnimation Please use enum instead of manually typing the string. Enum's filename is `trackappearanim.js`.
@@ -65,6 +65,18 @@ class MapEvent_AnimateTrack extends ActionEventType {
     )}, "beatsBehind": ${JSON.stringify(
       params[3] == null ? this.beatsBehind : params[3]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

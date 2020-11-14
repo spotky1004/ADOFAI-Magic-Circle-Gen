@@ -1,9 +1,9 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 
 /**
  * Class for storing values of PositionTrack action.
  */
-class MapEvent_PositionTrack extends ActionEventType {
+class MapEvent_PositionTrack extends ActionValue {
   /**
    * Create a PositionTrack event using these parameters.
    * @param {[Number, Number]} positionOffset Offset of the tile's position.
@@ -37,6 +37,18 @@ class MapEvent_PositionTrack extends ActionEventType {
     )}], "editorOnly": ${JSON.stringify(
       (params[1] == null ? this.editorOnly : params[1]) ? "Enabled" : "Disabled"
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

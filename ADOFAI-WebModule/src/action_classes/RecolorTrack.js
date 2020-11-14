@@ -1,4 +1,4 @@
-import ActionEventType from "./../ActionEventType.js";
+import ActionValue from "../ActionValue.js";
 import Color from "../data_types/color.js";
 import TILE_RANGE from "../data_types/tilerange.js";
 import TRACK_COLOR_TYPE from "../data_types/trackcolortype.js";
@@ -8,9 +8,9 @@ import TRACK_STYLE from "../data_types/trackstyle.js";
 /**
  * Class for storing values of RecolorTrack action.
  *
- * DO NOT MANUALLY USE STRING IN `trackColorType`, `trackColorPulse`, `trackStyle` PARAMETER.
+ * DO NOT MANUALLY USE STRING IN `trackColorType`, `trackColorPulse`, `trackStyle` PROPERTY.
  */
-class MapEvent_RecolorTrack extends ActionEventType {
+class MapEvent_RecolorTrack extends ActionValue {
   /**
    * Create a RecolorTrack event using these parameters.
    * @param {[Number, String]} startTile Unlike offset-related parameters, this one uses 1st item for offsetting tile and 2nd item for tile range.
@@ -151,6 +151,18 @@ class MapEvent_RecolorTrack extends ActionEventType {
     )}, "eventTag": ${JSON.stringify(
       params[10] == null ? this.eventTag : params[10]
     )}`;
+  }
+
+  /**
+   * Create value by converting from object
+   * @param {Object} obj
+   */
+  static fromObject(obj) {
+    var res = new this();
+    Object.keys(obj).forEach((key) => {
+      res[key] = obj[key];
+    });
+    return res;
   }
 }
 

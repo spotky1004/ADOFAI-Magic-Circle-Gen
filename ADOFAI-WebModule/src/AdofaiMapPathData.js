@@ -17,7 +17,7 @@ class AdofaiMapPathData {
    *
    * Inputting number might return instance with empty values when no corresponding tile is found.
    *
-   * @param {Object} settings Customizable settings to generate a tile.
+   * @param {{findNearestTileByAngle: boolean, useSmallerAngleOnOverlapping: boolean, fallback: String | null}} settings Customizable settings to generate a tile.
    */
   constructor(
     val,
@@ -28,7 +28,7 @@ class AdofaiMapPathData {
       findNearestTileByAngle: false,
 
       /**
-       * Whether to use the tile with higher (<-- false) or smaller (<-- true) angle when difference of nearest angle is both the same.
+       * Whether to use the tile with a higher (<-- false) or smaller (<-- true) angle when difference of nearest angle is both the same.
        */
       useSmallerAngleOnOverlapping: true,
 
@@ -55,7 +55,7 @@ class AdofaiMapPathData {
 
     switch (typeof val) {
       case "string":
-        var tilecode = val.toUpperCase()[0];
+        var tilecode = val[0];
 
         if (AdofaiMapPathData.PATH_LIST.includes(tilecode)) {
           this.code = tilecode;
@@ -145,17 +145,23 @@ class AdofaiMapPathData {
     "B",
     "F",
     "N",
+    "!",
     "5",
     "6",
     "7",
     "8",
-    "!",
+    "q",
+    "W",
+    "x",
+    "V",
+    "Y",
+    "A",
+    "p",
+    "o",
   ];
 
   /**
-   * List of the path's absolute angle as Number.
-   *
-   * In most cases, you do not need this one.
+   * List of the path's absolute angle as Number. (Use same index with PATH_LIST to get the path key)
    */
   static ABSOLUTE_ANGLE_LIST = [
     90,
@@ -174,11 +180,19 @@ class AdofaiMapPathData {
     240,
     300,
     330,
+    0,
     108,
     252,
     900 / 7,
     1620 / 7,
-    0,
+    75,
+    15,
+    345,
+    285,
+    255,
+    195,
+    165,
+    105,
   ];
 
   /**
@@ -191,43 +205,49 @@ class AdofaiMapPathData {
    * GetRelativeAngle(tileA, tileB, false);
    * GetRelativeAngle(tileA.code + "5768888755786", tileB, true);
    *
-   * @param {AdofaiMapPathData | String} ThisTile First tile to be a base for B. (Input String when calculating all of 5, 6, 7, 8. They should be calculated at once)
-   * @param {AdofaiMapPathData} NextTile Second tile to base on A.
-   * @param {Boolean} Twirled Whether the planet is twirled or not.
+   * @param {AdofaiMapPathData | String} thisTile First tile to be a base for second tile's angle. (Input String when calculating all of 5, 6, 7, 8. They should be calculated at once)
+   * @param {AdofaiMapPathData} nextTile Second tile to base on the first tile.
+   * @param {Boolean} twirled Whether the planet is twirled or not.
    */
-  static GetRelativeAngle(ThisTile, NextTile, Twirled) {
-    var t = new Number();
-    switch (typeof ThisTile) {
-      case "string":
-        var str = ThisTile.replace(/[ \t]/g, "").toUpperCase();
-        var sp = str.split(/[^5-8]/gi);
-        var laststr = sp[sp.length - 1];
-        var angle = NaN;
-        if (laststr.length != 0) {
-          var _5 = laststr.replace(/[^5]/g, "").length;
-          var _6 = laststr.replace(/[^6]/g, "").length;
-          var _7 = laststr.replace(/[^7]/g, "").length;
-          var _8 = laststr.replace(/[^8]/g, "").length;
-
-          angle = (72 * _5 + 288 * _6 + (900 / 7) * _7 + (1620 / 7) * _8) % 360;
+  static GetRelativeAngle(thisTile, nextTile, twirled) {
+    let absTiles = ["5", "6", "7", "8"];
+    var t, n;
+    if (absTiles.includes(nextTile.code)) {
+      n = nextTile.absoluteAngle;
+    } else {
+      // normal calculation
+      if (typeof thisTile == "string") {
+        // calc as 5 6 7 8 str
+        var lastChar = thisTile[thisTile.length - 1];
+        if (absTiles.includes(lastChar)) {
+          // it ends with 5 6 7 8
+          var numbers = [];
+          for (var i = 0; i < 4; i++) {
+            var regex = new RegExp(`[^${i + 5}]`, "g");
+            numbers.push(thisTile.replace(regex, "").length);
+          }
+          t =
+            (72 * numbers[0] +
+              288 * numbers[1] +
+              (900 / 7) * numbers[2] +
+              (1620 / 7) * numbers[3]) %
+            360;
         } else {
-          if (!AdofaiMapPathData.PATH_LIST.includes(str[str.length - 1]))
-            throw new Error(`Invalid tile "${ThisTile}"`);
-          angle = new AdofaiMapPathData(str[str.length - 1]).absoluteAngle;
+          // it does not end with 5 6 7 8
+          var simulatedTile = new this(lastChar);
+          if (isNaN(simulatedTile.absoluteAngle)) {
+            // fallback, return NaN
+            return NaN;
+          } else t = simulatedTile.absoluteAngle;
         }
-        t = angle;
-        break;
-      default:
-        t = ThisTile.absoluteAngle;
-        break;
+      } else t = thisTile.absoluteAngle;
     }
-    var n = NextTile.absoluteAngle;
 
-    var result = (n - t + 540) % 360;
-    result = result == 0 ? 360 : result;
-    result = Twirled ? 360 - result : result;
-
-    return result;
+    var r = (n - t + 540) % 360;
+    0 == r && 0 != n && (r = 360),
+      twirled && (r = 360 - r),
+      0 == r && (r = 360);
+    return r;
   }
 
   /**

@@ -1,4 +1,5 @@
 // color class is imported separately.
+// why cant i use defineProperties to make a list of values at once vscode is so bad it cant read array so theres no autocomplete at all help
 import BG_DISPLAY_MODE from "./bgdisplaymode.js";
 import DECO_RELATIVETO from "./deco_relativeto.js";
 import EASE from "./ease.js";
@@ -6,6 +7,8 @@ import FILTER from "./filter.js";
 import HITSOUNDS from "./hitsound.js";
 import PLANE from "./plane.js";
 import RELATIVETO from "./relativeto.js";
+import SPECIAL_ARTIST_TYPE from "./special_artist_type.js";
+import SPEEDTYPE from "./speedtype.js";
 import TILE_RANGE from "./tilerange.js";
 import APPEAR_ANIM from "./trackappearanim.js";
 import DISAPPEAR_ANIM from "./trackdisappearanim.js";
@@ -53,6 +56,18 @@ Object.defineProperty(obj, "PLANES", {
 });
 Object.defineProperty(obj, "RELATIVETO", {
   value: RELATIVETO,
+  writable: false,
+  enumerable: true,
+  configurable: false,
+});
+Object.defineProperty(obj, "SPECIAL_ARTIST_TYPE", {
+  value: SPECIAL_ARTIST_TYPE,
+  writable: false,
+  enumerable: true,
+  configurable: false,
+});
+Object.defineProperty(obj, "SPEEDTYPE", {
+  value: SPEEDTYPE,
   writable: false,
   enumerable: true,
   configurable: false,

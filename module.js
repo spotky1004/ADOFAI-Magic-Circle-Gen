@@ -28,7 +28,7 @@ function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0, maxoffset=360) {
     if (!(midspin == 0 || midspin == 1)) {
       midspin = Math.floor(Math.random()*2);
     }
-    if (perC == -1 || !(perC == 2 || perC == 3 || perC == 4 || perC == 6)) {
+    if (perC == -1 || !(perC == 2 || perC == 3 || perC == 4 || perC == 6 || perC == 8)) {
       var per = ((Math.floor(Math.random()*2)) ? ((Math.floor(Math.random()*2)) ? 2 : 3) : ((Math.floor(Math.random()*2)) ? 4 : 6));
     } else {
       var per = perC;
@@ -91,7 +91,7 @@ function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0, maxoffset=360) {
     function pushPerDeg() {
       var degThis = ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[Math.floor((ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length-5)*Math.random())];
       for (var i = 0; i < per; i++) {
-        if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || getDeg(degThis, perArr[perArr.length-1]) == 360 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1) {
+        if ((degThis+360/per*i)%360 == 0 || (degThis-perArr[perArr.length-1]+720)%360 == 180 || getDeg(degThis, perArr[perArr.length-1]) == 360 || findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, (degThis+360/per*i)%360) == -1 || disDegs[findIndex(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST, degThis)] == 1) {
           pushPerDeg();
           return;
         }
