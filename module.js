@@ -84,6 +84,10 @@ function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0, maxoffset=360) {
 
     map.settings.backgroundColor = '000000';
     map.settings.trackColor = 'debb7b';
+    map.settings.hitsoundVolume = 1;
+    map.settings.pitch = 1;
+    map.settings.zoom = 1;
+    map.settings.volume = 1;
 
     document.querySelector('#genOutput').innerHTML = map.Export();
     window.map = map;
