@@ -8,6 +8,18 @@ document.querySelector('#genButton').onclick = new Function(`
   );`
 );
 
+var pSortArr = [];
+for (var i = 0; i < ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length; i++) {
+  pSortArr.push([ADOFAI.PathData.ABSOLUTE_ANGLE_LIST[i], ADOFAI.PathData.PATH_LIST[i]]);
+}
+pSortArr.sort((a,b) => a[0]-b[0]);
+ADOFAI.PathData.ABSOLUTE_ANGLE_LIST = [];
+ADOFAI.PathData.PATH_LIST = [];
+for (var i = 0; i < pSortArr.length; i++) {
+  ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.push(pSortArr[i][0]);
+  ADOFAI.PathData.PATH_LIST.push(pSortArr[i][1]);
+}
+
 var pNode = document.getElementById('selectDegs');
 var disDegs = new Array(ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length).fill(0);
 for (var i = 0; i < ADOFAI.PathData.ABSOLUTE_ANGLE_LIST.length; i++) {
