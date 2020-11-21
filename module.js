@@ -62,6 +62,10 @@ function generateCircle(leng=-1, perC=-1, twirl=0, midspin=0, maxoffset=360) {
       }
     }
 
+    map.pathData.push(new ADOFAI.PathData('R'));
+    map.pathData.push(new ADOFAI.PathData('R'));
+    map.pathData.push(new ADOFAI.PathData('R'));
+
     console.log(map);
     var prevDeg = 180;
     var prevOffest = 180;
